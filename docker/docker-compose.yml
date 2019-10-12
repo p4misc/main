@@ -1,0 +1,33 @@
+version: '3'
+services:
+  p4dmaster:
+    build: ./p4dmaster
+    image: p4dmaster
+    container_name: p4dmaster
+    restart: always
+    networks:
+      - helix-core-network
+    command: /root/run_p4d.sh
+    ports:
+      - "1666:1666"
+
+  p4p:
+    build:
+      context: ./p4p
+      args:
+        - TARGET=p4dmaster:1666
+        - PORT=1777
+    image: p4p
+    container_name: p4p
+    restart: always
+    networks:
+      - helix-core-network
+    command: /root/run_p4p.sh
+    ports:
+      - "1777:1777"
+    depends_on:
+      - p4dmaster
+
+networks:
+    helix-core-network:
+        external: true
