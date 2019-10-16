@@ -1,15 +1,29 @@
 version: '3'
+
+networks:
+    helix-core-network:
+        external: true
+
 services:
+  p4xbase:
+    build: ./p4xbase
+    image: p4xbase
+    container_name: p4xbase
+    networks:
+      - helix-core-network
+
   p4dmaster:
     build: ./p4dmaster
     image: p4dmaster
     container_name: p4dmaster
-    restart: always
     networks:
       - helix-core-network
     command: /root/run_p4d.sh
     ports:
       - "1666:1666"
+    depends_on:
+      - p4xbase
+      - cadvisor
 
   p4p:
     build:
@@ -19,15 +33,60 @@ services:
         - PORT=1777
     image: p4p
     container_name: p4p
-    restart: always
     networks:
       - helix-core-network
     command: /root/run_p4p.sh
     ports:
       - "1777:1777"
     depends_on:
+      - p4xbase
       - p4dmaster
+      - cadvisor
 
-networks:
-    helix-core-network:
-        external: true
+  prometheus:
+    container_name: prometheus
+    image: prom/prometheus:latest
+    networks:
+      - helix-core-network
+    ports:
+      - 9090:9090
+    command:
+      - --config.file=/etc/prometheus/prometheus.yml
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml:ro
+    depends_on:
+      - cadvisor
+
+  grafana:
+    container_name: grafana
+    image: grafana/grafana:latest
+    networks:
+      - helix-core-network
+    ports:
+      - 3000:3000
+    depends_on:
+      - prometheus
+
+  cadvisor:
+    container_name: cadvisor
+    image: google/cadvisor:latest
+    networks:
+      - helix-core-network
+    ports:
+      - 8080:8080
+    volumes:
+      - /:/rootfs:ro
+      - /var/run:/var/run:rw
+      - /sys:/sys:ro
+      - /var/lib/docker/:/var/lib/docker:ro
+    depends_on:
+      - redis
+
+  redis:
+    container_name: redis
+    image: redis:latest
+    networks:
+      - helix-core-network
+    ports:
+      - 6379:6379
+

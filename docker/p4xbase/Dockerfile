@@ -1,7 +1,5 @@
 FROM ubuntu:bionic
 LABEL maintainer "p4misc <p4miscjp@gmail.com>"
-ARG TARGET="TARGET"
-ARG PORT="PORT"
 RUN apt-get update -y
 RUN apt-get install vim -y
 RUN apt-get install gnupg2 -y
@@ -9,10 +7,3 @@ RUN apt-get install wget -y
 RUN wget -qO - https://package.perforce.com/perforce.pubkey | apt-key add -
 RUN echo "deb http://package.perforce.com/apt/ubuntu bionic release" > /etc/apt/sources.list.d/perforce.list
 RUN apt-get update -y
-RUN apt-get install helix-proxy -y
-RUN mkdir /opt/perforce/servers/p4p-master
-RUN echo "#!/bin/sh\np4p -r /opt/perforce/servers/p4p-master -p ${PORT} -t ${TARGET}:1666" > /root/run_p4p.sh
-RUN chmod u+x /root/run_p4p.sh
-WORKDIR /root
-EXPOSE $PORT
-CMD ["/root/run_p4p.sh"]
