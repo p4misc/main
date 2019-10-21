@@ -11,4 +11,4 @@ services:
     image: helix
     container_name: helix
     ports:
-      - 1666:1666
+      - 1999:1999
