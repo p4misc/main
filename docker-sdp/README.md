@@ -39,3 +39,6 @@ P4Pythonが必要な場合はインストールスクリプトを実行します
 
 このため、`docker-compose up -d` の実行後は、`ssl:IPアドレス:1999` または `ssl:ホスト名:1999` でHelix Coreに接続してください。
 
+## settings.cfgの内容確認
+コンテナにログインして `/hxdepots/reset/settings.cfg` の内容を確認するか、
+`docker cp helix:/hxdepots/reset/settings.cfg .` を実行してホストにファイルを取得して内容を確認してください。
