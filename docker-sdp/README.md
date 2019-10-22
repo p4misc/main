@@ -19,7 +19,16 @@ P4Pythonが必要な場合はインストールスクリプトを実行します
 - Helix Coreインスタンスを起動する (`/p4/1/bin/p4d_1_init start`)
 
 ## コンテナの起動
-`docker-compose up -d`でコンテナを起動できます。
+`docker-compose up -d`でコンテナを起動できます(上記の手順もすべて行います)。
+
+`docker-compose.yml` および 関連する`Dockerfile` では以下のことをすべて行います。
+- ubuntu18updイメージの作成
+  - Ubuntu 18.04の公式イメージを入手する
+  - 公式イメージに不足しているパッケージをインストールする
+- helixイメージの作成
+  - Helix Installer(`reset_sdp.sh`)を入手する
+  - 上述した要領でHelix Coreのインスタンスを作成する
+  - P4Pythonをインストールする
 
 ## Helix Coreへのアクセス
 雛形ファイル(`settings.cfg`)の内容をそのまま使用してHelix Coreインスタンスを構築しているため、以下の設定になっています。
@@ -28,5 +37,5 @@ P4Pythonが必要な場合はインストールスクリプトを実行します
 - SSL接続: `有効`
 - ポート番号: `1999`
 
-このため、`ssl:IPアドレス:1999` または `ssl:ホスト名:1999` でHelix Coreに接続してください。
+このため、`docker-compose up -d` の実行後は、`ssl:IPアドレス:1999` または `ssl:ホスト名:1999` でHelix Coreに接続してください。
 
