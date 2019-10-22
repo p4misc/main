@@ -1,4 +1,4 @@
-FROM centos7upd
+FROM ubuntu18upd
 LABEL maintainer "p4misc <p4miscjp@gmail.com>"
 RUN mkdir -p /hxdepots/reset
 WORKDIR /hxdepots/reset
