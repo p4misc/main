@@ -1,0 +1,9 @@
+version: '3'
+
+services:
+  psla:
+    build: .
+    image: psla
+    container_name: psla
+    ports:
+      - 5050:5050
