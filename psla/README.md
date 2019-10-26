@@ -31,5 +31,12 @@ Docker Hub上のイメージを使用する場合は、次の手順でDockerコ�
 ## PSLAの使用方法
 PSLAのWebアプリケーションは、5050ポートで待ち受けをして稼働するように設定しました。
 
-Webブラウザを使用して http://IPアドレスorホスト名:5050/ でアクセスしてください。
+Webブラウザを使用して http://IPアドレスorホスト名:5050/ にアクセスすると以下のような画面が表示されます。
 
+![PSLAのホーム画面](https://github.com/p4misc/main/blob/master/images/psla/psla_home.png "PSLAのホーム画面")
+
+Upload a New LogからHelix Coreのログをアップロードするとログが内部的にSQLite DBに変換されて分析可能な状態になります。
+
+標準で備わっている分析結果のチャート例を以下に示します。
+
+![PSLAのチャート例](https://github.com/p4misc/main/blob/master/images/psla/psla_chart.png "PSLAのチャート例")
