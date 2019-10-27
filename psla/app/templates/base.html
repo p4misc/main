@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="ja">
+    <head>
+        <meta charset="UTF-8">
+        {% if title %}
+        <title>{{ title }} - PSLA</title>
+        {% else %}
+        <title>Perforce Server Log Analyzer - ローカル Docker バージョン</title>
+        {% endif %}
+        <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static', filename='style.css') }}">
+    </head>
+    <body>
+        <div>
+            PSLA:
+            <a href="{{ url_for('index') }}">ホーム</a>
+        </div>
+        <hr>
+        {% with messages = get_flashed_messages(with_categories=True) %}
+            {% for category, message in messages %}
+                <div class="{{ category }}">{{ message }}</div>
+            {% endfor %}
+        {% endwith %}
+
+        {% block content %}{% endblock %}
+    </body>
+</html>

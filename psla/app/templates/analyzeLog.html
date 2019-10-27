@@ -1,0 +1,67 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div id=psla class=analyze>
+
+ <h1>Perforce Server Log Analyzer - ローカル Docker バージョン</h1>
+     {% from "_formhelpers.html" import render_field %}
+     <form action="{{ url_for('analyzeLog') }}" method="post" role="form">
+        {{ form.csrf_token }}
+        {{ render_field(form.logFile) }}
+        <p>{{ form.submit() }}</p>
+    </form>
+
+    <!--<div class="progress" style="width: 50%; margin: 50px;">-->
+    <!--<div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%"></div>-->
+    <!--</div>-->
+
+ {% if dbName %}
+    <a class=btn href='{{ url_for("queryLog") }}'>
+          <span>選択中のDBに対して対話的にSQL文を実行</span></a>
+    <a class=btn href='{{ url_for("chartLog") }}'>
+          <span>選択中のDBのグラフを表示</span></a>
+    <br>
+
+ <p />
+ <h2>サーバログ '{{ dbName }}' を分析</h2>
+    <div class="charts text-center">
+        {% for chart in charts %}
+        <h2>{{ chart.title }}</h2>
+        <p>{{ chart.explanation }}</p>
+        <p>{{ chart.sql }}</p>
+        <p>クエリの実行時間: {{ chart.time_taken }}</p>
+        <div class="row"><div id="{{ chart.id }}"></div></div><hr>
+        {% endfor %}
+    </div>
+    {% endif %}
+
+ {% for table in tables %}
+    <h2>{{ table.title }}</h2>
+    <p>{{ table.explanation }}</p>
+    <p>{{ table.sql }}</p>
+    <p>クエリの実行時間: {{ table.time_taken }}</p>
+    {{ table.data|safe }}
+    {% endfor %}
+
+</div>
+
+<footer>
+
+    <script src="https://d3js.org/d3.v3.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vega@3.2.1"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vega-lite@2.3.1"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vega-embed@3.2.0"></script>
+
+    <!--var source = new EventSource("/progress");-->
+    <!--source.onmessage = function(event) {-->
+        <!--$('.progress-bar').css('width', event.data+'%').attr('aria-valuenow', event.data);-->
+        <!--if (event.data == 100) {-->
+			<!--source.close()-->
+		<!--}-->
+    <!--}-->
+    <!--</script>-->
+
+</footer>
+
+{% endblock %}

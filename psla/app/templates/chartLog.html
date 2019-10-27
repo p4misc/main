@@ -1,0 +1,71 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div id=psla class=analyze>
+
+ <h1>Perforce Server Log Analyzer - グラフ表示</h1>
+
+    {% from "_formhelpers.html" import render_field %}
+    <form action="{{ url_for('chartLog') }}" method="post" role="form">
+        {{ form.csrf_token }}
+        {{ render_field(form.logFile) }}
+        {{ render_field(form.chartId) }}
+        <p>{{ form.submit() }}</p>
+    </form>
+    {% if dbName %}
+    <p />
+    <h2>サーバログ '{{ dbName }}' のグラフ表示</h2>
+    <div class="charts text-center">
+        <!-- Placeholder for the tooltip -->
+        <div id="vis-tooltip" class="vg-tooltip"></div>
+
+        <h2>{{ chart.title }}</h2>
+        <p>{{ chart.explanation }}</p>
+        <p>{{ chart.sql }}</p>
+        <p>クエリの実行時間: {{ chart.time_taken }}</p>
+         <div class="row"><div id="{{ chart.id }}"></div></div><hr>
+    </div>
+    {% endif %}
+</div>
+
+<!--This is used for Altair graph-->
+
+<footer>
+
+    <script src="https://d3js.org/d3.v3.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vega@3.2.1"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vega-lite@2.3.1"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vega-embed@3.2.0"></script>
+
+    <!-- Vega Tooltip -->
+    <script src="https://vega.github.io/vega-tooltip/vega-tooltip.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://vega.github.io/vega-tooltip/vega-tooltip.css">
+
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/vega-tooltip@0/build/vega-tooltip.min.css">
+      <script src="https://cdn.jsdelivr.net/npm/vega-tooltip@0"></script>
+
+    <!-- Render Charts -->
+    <script type="text/javascript">
+        function embed_graph(div, chartJSON) {
+            var opt = {
+              mode: "vega-lite",
+              renderer: "svg",
+              actions: {export: true, source: false, editor: false}
+            };
+            vegaEmbed("#" + div, chartJSON, opt)
+                .then(function(result) {
+                    // result.view is the Vega View, json is the original Vega-Lite specification
+                    vegaTooltip.vegaLite(result.view, chartJSON);
+                  })
+                  .catch(console.error);
+        }
+
+    </script>
+    <script type="text/javascript">
+        embed_graph("{{ chart.id }}", {{ chart.data|safe }})
+              </script>
+
+</footer>
+
+{% endblock %}

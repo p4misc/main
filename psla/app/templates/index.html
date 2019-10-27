@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div id=psla class=prompt>
+
+ <h1>Perforce Server Log Analyzer - ローカル Docker バージョン</h1>
+
+ <h2>Helix Coreサーバのパフォーマンスに関する問題の診断方法</h2>
+ <p>
+   Perforce Server Log Analyzer (PSLA)にログファイルをアップロードします。<br />
+   ログには、Helix Coreサーバのパフォーマンスに影響を与えた可能性があるコマンドの詳細が記述されています。<br />
+   ログデータは、Dockerコンテナ内のSQLite3データベースに格納されます。
+ </p>
+
+ <div class="hr-dotted"></div>
+
+ <p>
+   PSLAは <a href="https://swarm.workshop.perforce.com/projects/perforce-software-log-analyzer/files/psla/psla/log2sql.py">log2sql.py</a> ツールのWeb UI版です。<br />
+   log2sql.py自体は、カスタムレポートを作る機能を備えていますが、Pythonと関連パッケージをインストールする必要があります。また、DockerのインストールやSQLの知識も必要になります。<br />
+   PSLAは、Helix Coreのログファイルをアップロードして結果を解析するだけで簡単に利用できます。
+ </p>
+
+ <div class="hr-dotted"></div>
+
+ <div class=buttons>
+  <a class=btn href='{{ url_for("analyzeLog") }}'>
+   <span>ログDBを分析</span></a>
+  <a class=btn href='{{ url_for("queryLog") }}'>
+    <span>ログDBを対話的に分析</span></a>
+   <a class=btn href='{{ url_for("uploadLog") }}'>
+   <span>新しいログをアップロード</span></a>
+ </div>
+
+ <div style="clear: both;"></div>
+</div>
+
+{% endblock %}

@@ -17,6 +17,7 @@ RUN wget https://swarm.workshop.perforce.com/projects/perforce-software-log-anal
     unzip psla.zip
 WORKDIR /root/psla/psla
 RUN pip3 install -r requirements.txt
+COPY app /root/psla/psla/app/
 
 ENV LC_ALL ja_JP.UTF-8
 ENV LANG ja_JP.UTF-8

@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div id=psla class=upload>
+
+ <h1>Perforce Server Log Analyzer - ローカル Docker バージョン</h1>
+ <h2>ログファイルのアップロード</h2>
+
+ <h3>ログファイルのアップロード</h3>
+ <p class="plain">
+  本フォームを使用して、Helix Coreサーバのログファイルをアップロードしてください。
+  Log Analyzerは、ログファイルを解析してHelix Coreサーバのパフォーマンスに影響を与えた可能性があるコマンドを表示します。
+ </p>
+
+ {% from "_formhelpers.html" import render_field %}
+ <form action="{{ url_for('uploadLog') }}" method="post" enctype="multipart/form-data" role="form">
+  {{ form.csrf_token }}
+    {{ render_field(form.uploadFile, size=64) }}
+<p>{{ form.submit() }}</p>
+</form>
+
+<ul class="footnote">
+  <li>アップロード可能なファイルの拡張子は <code>.txt</code>、<code>.gz</code>、<code>.zip</code>、<code>.log</code> です。拡張子なしのファイルもアップロードできます。</li>
+ </ul>
+
+</div>
+
+{% endblock %}

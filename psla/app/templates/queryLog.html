@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){
+
+    $('#queryOptions').change(function() {
+        $("#sqlQuery").empty();
+        query_sql = $("#queryOptions option:selected").val();
+        $('#sqlQuery').val(query_sql);
+    });
+
+});
+</script>
+
+<div id=psla class=analyze>
+
+ <h1>Perforce Server Log Analyzer - 対話的なクエリ実行</h1>
+    <p>テーブルのスキーマとサンプルSQL - すべてのカラムを表示することの
+    できる以下のSQL文をコピーペーストして使用できます。<br />
+    また、目的に合わせてSQL文を編集するか、<a href='{{ url_for("analyzeLog") }}'><span>ログの分析</span></a>ページからSQL文をコピーしてください。</p>
+    <a class=btn href='{{ url_for("schema") }}'>
+          <span>テーブルスキーマの詳細</span></a>
+    <p>
+        SELECT process.processKey, process.lineNumber, startTime, endTime, computedLapse, completedLapse,<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;pid, user, workspace, ip, app, cmd, args,<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;uCpu, sCpu, diskIn, diskOut, ipcIn, ipcOut, maxRss, pageFaults,<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;rpcMsgsIn, rpcMsgsOut, rpcSizeIn, rpcSizeOut, rpcHimarkFwd, rpcHimarkRev,<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;rpcSnd, rpcRcv, running, error,<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;pagesIn, pagesOut, pagesCached, readLocks, writeLocks,<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;getRows, posRows, scanRows, putRows, delRows,<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;totalReadWait, totalReadHeld, totalWriteWait, totalWriteHeld, <br>
+    &nbsp;&nbsp;&nbsp;&nbsp;maxReadWait, maxReadHeld, maxWriteWait, maxWriteHeld, <br>
+    &nbsp;&nbsp;&nbsp;&nbsp;peekCount, totalPeekWait, totalPeekHeld, maxPeekWait, maxPeekHeld, triggerLapse<br>
+FROM tableUse JOIN process USING (processKey)<br>
+LIMIT 10<br>
+    </p>
+
+     {% from "_formhelpers.html" import render_field %}
+     <form action="{{ url_for('queryLog') }}" method="post" role="form">
+         {{ form.csrf_token }}
+         {{ render_field(form.logFile) }}
+         {{ render_field(form.queryOptions) }}
+         {{ render_field(form.sqlQuery, rows=20, cols=80) }}
+         <p>{{ form.submit() }}</p>
+    </form>
+
+ {% if dbName %}
+ <h2>サーバログ '{{ dbName }}' を分析</h2>
+
+    <h2>クエリの実行結果</h2>
+    <p>{{ data.sql }}</p>
+    <p>クエリの実行時間: {{ data.time_taken }}</p>
+    {{ data.data|safe }}
+
+ {% endif %}
+
+</div>
+
+{% endblock %}
