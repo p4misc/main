@@ -28,6 +28,9 @@ Docker Hub上のイメージを使用する場合は、次の手順でDockerコ�
   - `docker pull p4misc/psla`
   - `docker run -p 5050:5050 -d -it psla`
 
+## 翻訳について
+翻訳を適用せずにオリジナルの英語版を使用する場合は `Dockerfile` から `COPY app /root/psla/psla/app/` の行を削除してください。
+
 ## PSLAの使用方法
 PSLAのWebアプリケーションは、5050ポートで待ち受けをして稼働するように設定しました。
 
