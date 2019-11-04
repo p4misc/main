@@ -10,161 +10,193 @@
     <tr>
         <td>フィールド名</td>
         <td>フィールドタイプ</td>
-        <td>備考</td>
+        <td>備考(和訳)</td>
+        <td>備考(原文)</td>
     </tr>
     <tr>
         <td>processKey</td>
         <td>char(50)</td>
+        <td>tableUseテーブルとのJOIN用プライマリキー - 行のMD5ハッシュ</td>
         <td>Prime key for join with TableUse - MD5 hash of line</td>
     </tr>
     <tr>
         <td>lineNumber</td>
         <td>int</td>
+        <td>開始コマンドの行番号</td>
         <td>Linumber of initial start command in log file</td>
     </tr>
     <tr>
         <td>StartTime</td>
         <td>date</td>
+        <td>コマンドの開始時刻 "YYYY-mm-dd HH:MM:SS" 形式</td>
         <td>Time command started. Format "YYYY-mm-dd HH:MM:SS"</td>
     </tr>
     <tr>
     <td>EndTime</td>
         <td>date</td>
+        <td>コマンドの終了時刻 "YYYY-mm-dd HH:MM:SS" 形式</td>
         <td>Time command finished (if finish found). Format "YYYY-mm-dd HH:MM:SS"</td>
     </tr>
     <tr>
         <td>computedLapse</td>
         <td>float</td>
+        <td>コマンドが計算フェーズに要した秒数(いくつかのコマンドのみに存在)</td>
         <td>Time in seconds during compute phase of command (only present for some commands)</td>
     </tr>
     <tr>
         <td>CompletedLapse</td>
         <td>float</td>
+        <td>コマンドが完了するまでの秒数</td>
         <td>Time in seconds until commmand completed</td>
     </tr>
     <tr>
         <td>pid</td>
         <td>int</td>
+        <td>プロセスID</td>
         <td>Process id</td>
     </tr>
     <tr>
         <td>User</td>
         <td>text</td>
+        <td>Helix CoreユーザID</td>
         <td>Perforce user id</td>
     </tr>
     <tr>
         <td>workspace</td>
         <td>text</td>
+        <td>コマンドの実行に使用したワークスペース名</td>
         <td>Name of workspaces in which command was executed</td>
     </tr>
     <tr>
         <td>ip</td>
         <td>text</td>
+        <td>コマンドの実行に使用したクライアントIPアドレス</td>
         <td>IP address from which command was executed</td>
     </tr>
     <tr>
         <td>app</td>
         <td>text</td>
+        <td>アプリケーションのバージョン文字列 - P4APIの呼び出しに使用されたもの</td>
         <td>String application version - as used in calls to P4API</td>
     </tr>
     <tr>
         <td>cmd</td>
         <td>text</td>
+        <td>実際に実行されたHelix Coreコマンド - 多くは "user-" 接頭語が付与される</td>
         <td>Actual perforce command executed - typically with "user-" prefix</td>
     </tr>
     <tr>
         <td>args</td>
         <td>text</td>
+        <td>コマンドパラメータ</td>
         <td>Command arguments (if any)</td>
     </tr>
     <tr>
         <td>uCpu</td>
         <td>int</td>
+        <td>ユーザCPU時間(ms)</td>
         <td>User CPU used (milliseconds)</td>
     </tr>
     <tr>
         <td>sCpu</td>
         <td>int</td>
+        <td>システムCPU時間(ms)</td>
         <td>System CPU (milliseconds)</td>
     </tr>
     <tr>
         <td>diskIn</td>
         <td>int</td>
+        <td>読み込まれたディスクのブロック数(512バイト単位)</td>
         <td>Disk blocks (512 bytes) read</td>
     </tr>
     <tr>
         <td>diskOut</td>
         <td>int</td>
+        <td>書き込まれたディスクのブロック数(512バイト単位)</td>
         <td>Disk blocks (512 bytes) written</td>
     </tr>
     <tr>
         <td>IPCin</td>
         <td>int</td>
+        <td>IPC受信メッセージ</td>
         <td>IPC messages received</td>
     </tr>
     <tr>
         <td>IPCout</td>
         <td>int</td>
+        <td>IPC送信メッセージ</td>
         <td>IPC messages sent</td>
     </tr>
     <tr>
         <td>maxRss</td>
         <td>int</td>
         <td></td>
+        <td></td>
     </tr>
     <tr>
         <td>pageFaults</td>
         <td>int</td>
+        <td>I/O処理の最中に発生したページフォルトの数</td>
         <td>page faults that were serviced by doing I/O</td>
     </tr>
     <tr>
         <td>rpcMsgsIn</td>
         <td>int</td>
+        <td>RPC受信メッセージの数</td>
         <td>Number of RPC messages received</td>
     </tr>
     <tr>
         <td>rpcMsgsOut</td>
         <td>int</td>
+        <td>RPC送信メッセージの数</td>
         <td>Number of RPC messages sent</td>
     </tr>
     <tr>
         <td>rpcSizeIn</td>
         <td>int</td>
+        <td>RPC受信メッセージのサイズ(1MBで四捨五入)</td>
         <td>Size of RPC messages received (rounded to 1MB)</td>
     </tr>
     <tr>
         <td>rpcSizeOut</td>
         <td>int</td>
+        <td>RPC送信メッセージのサイズ(1MBで四捨五入)</td>
         <td>Size of RPC messages sent (rounded to 1MB)</td>
     </tr>
     <tr>
         <td>rpcHimarkFwd</td>
         <td>int</td>
+        <td>RPC送信ウィンドウサイズ - 受信との不一致の検査用</td>
         <td>RPC send Window size - check for mismatch with receive</td>
     </tr>
     <tr>
         <td>rpcHimarkRev</td>
         <td>int</td>
+        <td>RPC送信ウィンドウサイズ - 送信との不一致の検査用</td>
         <td>RPC receive Window size - check for mismatch with send</td>
     </tr>
     <tr>
         <td>rpcSend</td>
         <td>float</td>
+        <td>RPCメッセージの送信所要時間(s)</td>
         <td>Time in seconds sending RPC messages</td>
     </tr>
     <tr>
         <td>rpcRcv</td>
         <td>float</td>
+        <td>RPCメッセージの受信所要時間(s)</td>
         <td>Time in seconds receiving RPC messages</td>
     </tr>
     <tr>
         <td>running</td>
         <td>int</td>
-        <td>Number of concurrent processes at the same time - only valid if configurable server>=3</td>
+        <td>同時に実行されたプロセスの数 - (構成可能変数 server &gt;= 3 のみで有効)</td>
+        <td>Number of concurrent processes at the same time - only valid if configurable server&gt;=3</td>
     </tr>
     <tr>
         <td>error</td>
         <td>text</td>
+        <td>その他のエラーメッセージ</td>
         <td>Any error message</td>
     </tr>
 </table>
@@ -174,141 +206,169 @@
     <tr>
         <td>フィールド名</td>
         <td>フィールドタイプ</td>
-        <td>備考</td>
+        <td>備考(和訳)</td>
+        <td>備考(原文)</td>
     </tr>
     <tr>
         <td>processKey</td>
         <td>char(50)</td>
+        <td>processテーブルとのJOIN用プライマリキー - 行のMD5ハッシュ</td>
         <td>Prime key for join with Process - MD5 hash of line</td>
     </tr>
     <tr>
         <td>lineNumber</td>
         <td>int </td>
+        <td>第２プライマリキー - 同一の秒に同一のMD5で多重実行されたコマンドの区別用</td>
         <td>Part of prime key - required for duplicate commands with same MD5 within same second</td>
     </tr>
     <tr>
         <td>tableName</td>
         <td>varchar</td>
+        <td>関与したテーブルの名称(例: db.have, db.user, および 接頭語 meta/client/change と 接尾語 R/W を持つ"メタ"テーブルも含む)</td>
         <td>Name of table involved, e.g. db.have, db.user. Includes certain "meta" tables with prefixes: meta/client/change and can have R/W suffixes</td>
     </tr>
     <tr>
         <td>pagesIn</td>
         <td>int</td>
+        <td>(ファイルシステムキャッシュ以外の)プロセス専用メモリとして読み込まれたページの数</td>
         <td>Number of pages read in process-private memory (not filesystem cache)</td>
     </tr>
     <tr>
         <td>pagesOut</td>
         <td>int</td>
+        <td>(ファイルシステムキャッシュ以外の)プロセス専用メモリとして書き込まれたページの数</td>
         <td>Number of pages written in process-private memory (not filesystem cache)</td>
     </tr>
     <tr>
         <td>pagesCached</td>
         <td>int</td>
+        <td>(ファイルシステムキャッシュ以外の)プロセス専用メモリとして確保されたページの数</td>
         <td>Number of pages for process-private memory (not filesystem cache)</td>
     </tr>
     <tr>
         <td>readLocks</td>
         <td>int</td>
+        <td>テーブルに対する読み込みロック数</td>
         <td>Number of read locks for this table</td>
     </tr>
     <tr>
         <td>writeLocks</td>
         <td>int</td>
+        <td>テーブルに対する書き込みロック数</td>
         <td>Number of write locks for this table</td>
     </tr>
     <tr>
         <td>getRows</td>
         <td>int</td>
+        <td>キーで列のフェッチを行った数</td>
         <td>Number of fetches of rows by key</td>
     </tr>
     <tr>
         <td>posRows</td>
         <td>int</td>
+        <td>スキャンの位置決めに使用された列の数</td>
         <td>Number of rows used to position for scan</td>
     </tr>
     <tr>
         <td>scanRows</td>
         <td>int</td>
+        <td>スキャンされた列の数</td>
         <td>Number of rows scanned</td>
     </tr>
     <tr>
         <td>putRows</td>
         <td>int</td>
+        <td>書き込みが行われた列の数</td>
         <td>Number of rows written</td>
     </tr>
     <tr>
         <td>delRows</td>
         <td>int</td>
+        <td>削除された列の数</td>
         <td>Number of rows deleted</td>
     </tr>
     <tr>
         <td>totalReadWait</td>
         <td>int</td>
+        <td>読み取みロックの総待ち時間(ms)</td>
         <td>Total time waiting for read lock (ms)</td>
     </tr>
     <tr>
         <td>totalReadHeld</td>
         <td>int</td>
+        <td>読み取りロックの総保持時間(ms)</td>
         <td>Total time read lock held (ms)</td>
     </tr>
     <tr>
         <td>totalWriteWait</td>
         <td>int</td>
+        <td>書き込みロックの総待ち時間(ms)</td>
         <td>Total time waiting for write lock (ms)</td>
     </tr>
     <tr>
         <td>totalWriteHeld</td>
         <td>int</td>
+        <td>書き込みロックの総保持時間(ms)</td>
         <td>Total time write lock held (ms)</td>
     </tr>
     <tr>
         <td>maxReadWait</td>
         <td>int</td>
+        <td>読み取りロックの最大待ち時間(ms)</td>
         <td>Maximum time any one read lock was waited for (ms)</td>
     </tr>
     <tr>
         <td>maxReadHeld</td>
         <td>int</td>
+        <td>読み取りロックの最大保持時間(ms)</td>
         <td>Maximum time any one read lock was held (ms)</td>
     </tr>
     <tr>
         <td>maxWriteWait</td>
         <td>int</td>
+        <td>書き込みロックの最大待ち時間(ms)</td>
         <td>Maximum time any one write lock was waited for (ms)</td>
     </tr>
     <tr>
         <td>maxWriteHeld</td>
         <td>int</td>
+        <td>書き込みロックの最大保持時間(ms)</td>
         <td>Maximum time any one write lock was held (ms)</td>
     </tr>
     <tr>
         <td>peekCount</td>
         <td>int</td>
+        <td>ピーク数</td>
         <td>How many peeks</td>
     </tr>
     <tr>
         <td>totalPeekWait</td>
         <td>int</td>
+        <td>ピークロックの待ち時間(ms)</td>
         <td>Time waiting for peek locks (ms)</td>
     </tr>
     <tr>
         <td>totalPeekHeld</td>
         <td>int</td>
+        <td>ピークロックの保持時間(ms)</td>
         <td>Time peek locks held (ms)</td>
     </tr>
     <tr>
         <td>maxPeekWait</td>
         <td>int</td>
+        <td>ピークロックの最大待ち時間(ms)</td>
         <td>Max time waiting for any one peek lock (ms)</td>
     </tr>
     <tr>
         <td>maxPeekHeld</td>
         <td>int</td>
+        <td>ピークロックの最大保持時間(ms)</td>
         <td>Max time any one peek lock held (ms)</td>
     </tr>
     <tr>
         <td>triggerLapse</td>
         <td>float</td>
+        <td>トリガの所要時間(s) - トリガ名の一部がテーブル名になります(例: trigger_[triggername])</td>
         <td>Time (secs) for trigger to run - trigger is part of tablename, e.g. trigger_[triggername]</td>
     </tr>
 </table>
