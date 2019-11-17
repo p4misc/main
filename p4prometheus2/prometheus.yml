@@ -18,5 +18,5 @@ scrape_configs:
     scrape_interval: 5s
     static_configs:
     - targets:
-        - p4dmaster:9100
+        - p4prometheus:9100
 
