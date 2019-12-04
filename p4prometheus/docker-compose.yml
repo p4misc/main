@@ -1,0 +1,38 @@
+version: '3'
+
+networks:
+    helix-core-network:
+        external: true
+
+services:
+  helixcore:
+    build: .
+    image: helixcore
+    container_name: helixcore
+    networks:
+      - helix-core-network
+    ports:
+      - 1666:1666
+      - 9100:9100
+
+  prometheus:
+    container_name: prometheus
+    image: prom/prometheus:latest
+    networks:
+      - helix-core-network
+    ports:
+      - 9090:9090
+    command:
+      - --config.file=/etc/prometheus/prometheus.yml
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml:ro
+
+  grafana:
+    container_name: grafana
+    image: grafana/grafana:latest
+    networks:
+      - helix-core-network
+    ports:
+      - 3000:3000
+    depends_on:
+      - prometheus
