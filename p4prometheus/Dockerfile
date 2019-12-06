@@ -8,12 +8,14 @@ RUN yum update -y && \
                    rsync \
                    sudo \
                    which \
+                   cronie \
                    sysfsutils && \
     rm -rf /var/cache/yum/* && \
     yum clean all && \
     echo /usr/local/lib>> /etc/ld.so.conf; \
     echo /usr/lib64>> /etc/ld.so.conf; \
-    sed -ie "s/^Defaults[ \t]*requiretty/#Defaults  requiretty/g" /etc/sudoers
+    sed -ie "s/^Defaults[ \t]*requiretty/#Defaults  requiretty/g" /etc/sudoers; \
+    sed -ie '/pam_loginuid.so/s/^/#/' /etc/pam.d/crond
 
 FROM centos7 as centos7upd
 WORKDIR /root
@@ -42,13 +44,19 @@ RUN yum install -y helix-p4d && \
 RUN mkdir /opt/perforce/servers/master/metrics && \
     chown -R perforce:perforce /opt/perforce/servers/master/metrics
 
+COPY --chown=perforce:perforce p4prometheus.d /var/spool/cron/perforce
+RUN chmod 0644 /var/spool/cron/perforce
+
 WORKDIR /home/perforce
 USER perforce
 COPY --chown=perforce:perforce p4prometheus.yml .
 COPY --chown=perforce:perforce p4d_run.sh .
-RUN chmod +x p4d_run.sh
+COPY --chown=perforce:perforce monitor_metrics.sh .
+RUN chmod +x *.sh
 
 EXPOSE 1666
 EXPOSE 9100
+
+USER root
 
 CMD ["./p4d_run.sh"]
