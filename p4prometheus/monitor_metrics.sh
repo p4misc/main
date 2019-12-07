@@ -20,12 +20,13 @@ metrics_root=/opt/perforce/servers/master/metrics
 
 # Load SDP controlled shell environment.
 # shellcheck disable=SC1091
-P4USER=super
+P4USER=p4super
 P4PORT=1666
 P4BIN=/usr/bin/p4
+P4PASSWD=p4passwd
 
 p4="$P4BIN -u $P4USER -p $P4PORT"
-echo "super123456" | $p4 login
+echo "$P4PASSWD" | $p4 login
 
 # Get server id
 SERVER_ID=$($p4 serverid | awk '{print $3}')

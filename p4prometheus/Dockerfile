@@ -19,6 +19,9 @@ RUN yum update -y && \
 
 FROM centos7 as centos7upd
 WORKDIR /root
+
+ARG p4super
+ARG p4passwd
  
 ## Install node_exporter
 RUN useradd --no-create-home --shell /bin/false node_exporter
@@ -36,27 +39,29 @@ RUN wget https://github.com/rcowham/p4prometheus/files/3595236/p4prometheus.linu
     mv p4prometheus.linux-amd64 /usr/local/bin/p4prometheus
 
 ## Install helix-p4d
-RUN rpm --import https://package.perforce.com/perforce.pubkey
 ADD perforce.repo /etc/yum.repos.d/perforce.repo
-RUN yum install -y helix-p4d && \
-    /opt/perforce/sbin/configure-helix-p4d.sh master -p 1666 -r /opt/perforce/servers/master -u super -P super123456 --unicode --case=1 -n
 
-RUN mkdir /opt/perforce/servers/master/metrics && \
-    chown -R perforce:perforce /opt/perforce/servers/master/metrics
+RUN rpm --import https://package.perforce.com/perforce.pubkey && \
+    yum install -y helix-p4d && \
+    /opt/perforce/sbin/configure-helix-p4d.sh master -p 1666 -r /opt/perforce/servers/master -u "${p4super}" -P "${p4passwd}" --unicode --case=1 -n; \
+    mkdir -p /opt/perforce/servers/master/metrics
 
-COPY --chown=perforce:perforce p4prometheus.d /var/spool/cron/perforce
-RUN chmod 0644 /var/spool/cron/perforce
+RUN echo "HOG"
 
-WORKDIR /home/perforce
-USER perforce
-COPY --chown=perforce:perforce p4prometheus.yml .
-COPY --chown=perforce:perforce p4d_run.sh .
-COPY --chown=perforce:perforce monitor_metrics.sh .
-RUN chmod +x *.sh
+ADD --chown=perforce:perforce p4prometheus.d /var/spool/cron/perforce
+ADD --chown=perforce:perforce p4prometheus.yml /home/perforce/
+ADD --chown=perforce:perforce p4d_run.sh /home/perforce/
+ADD --chown=perforce:perforce monitor_metrics.sh /home/perforce/
+ADD --chown=perforce:perforce configure_serverlog.sh /home/perforce/
+
+RUN chmod 0644 /var/spool/cron/perforce; \
+    chmod +x /home/perforce/*.sh; \
+    chown -R perforce:perforce /opt/perforce/servers/master/metrics; \
+    /home/perforce/configure_serverlog.sh; \
+    sed -ie "s/P4USER=p4super/P4USER=${p4super}/g" /home/perforce/monitor_metrics.sh; \
+    sed -ie "s/P4PASSWD=p4passwd/P4PASSWD=${p4passwd}/g" /home/perforce/monitor_metrics.sh
 
 EXPOSE 1666
 EXPOSE 9100
 
-USER root
-
-CMD ["./p4d_run.sh"]
+CMD ["/home/perforce/p4d_run.sh"]

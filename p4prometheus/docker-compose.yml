@@ -6,7 +6,11 @@ networks:
 
 services:
   helixcore:
-    build: .
+    build:
+      context: .
+      args:
+        - p4super=super
+        - p4passwd=super123456
     image: helixcore
     container_name: helixcore
     networks:
