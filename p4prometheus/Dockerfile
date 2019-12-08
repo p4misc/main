@@ -1,4 +1,4 @@
-## Create a base centos7
+##### Start creating a base centos7
 FROM centos:7 as centos7
 LABEL maintainer "p4misc <p4miscjp@gmail.com>"
 
@@ -17,6 +17,7 @@ RUN yum update -y && \
     sed -ie "s/^Defaults[ \t]*requiretty/#Defaults  requiretty/g" /etc/sudoers; \
     sed -ie '/pam_loginuid.so/s/^/#/' /etc/pam.d/crond
 
+##### Start creating a helix core server with node_exporter and p4prometheus
 FROM centos7 as centos7upd
 WORKDIR /root
 
@@ -45,8 +46,6 @@ RUN rpm --import https://package.perforce.com/perforce.pubkey && \
     yum install -y helix-p4d && \
     /opt/perforce/sbin/configure-helix-p4d.sh master -p 1666 -r /opt/perforce/servers/master -u "${p4super}" -P "${p4passwd}" --unicode --case=1 -n; \
     mkdir -p /opt/perforce/servers/master/metrics
-
-RUN echo "HOG"
 
 ADD --chown=perforce:perforce p4prometheus.d /var/spool/cron/perforce
 ADD --chown=perforce:perforce p4prometheus.yml /home/perforce/
