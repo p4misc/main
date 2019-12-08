@@ -65,15 +65,24 @@ metrics_output | p4prometheusに出力させるメトリクスファイルのパ
 2. ```docker-compose build```で、イメージをビルドまたは取得します。
 3. ```docker-compose up -d```で、作成または取得したイメージを用いてコンテナを起動します。 
 4. Dockerホストマシン上で操作する場合は、```http://localhost:3000```でGrafanaにアクセスします。
-5. usernameとpasswordの両方に```admin```と入力します。
-6. パスワードを変更するよう促されるので、パスワードを入力します。
-7. ```Add data source```をクリックします。
-8. ```Prometheus```をクリックします。
-9. URLに```http://localhost:9090```、Accessに```Browser```を指定して```Save & Test```をクリックします。
-10. ```+```ボタンを押して、```Import```をクリックします。
-11. ```Upload .json file```をクリックします。
-12. 本リポジトリに登録されている```p4_stats_dashboard.json```を選択します。
-13. ```Import```をクリックします。
+5. usernameとpasswordの両方に```admin```と入力します。  
+  ![grafana01.png](https://github.com/p4misc/main/blob/master/p4prometheus/images/grafana01.png)
+6. パスワードを変更するよう促されるので、パスワードを入力します。  
+  ![grafana02.png](https://github.com/p4misc/main/blob/master/p4prometheus/images/grafana02.png)
+7. ```Add data source```をクリックします。  
+  ![grafana03.png](https://github.com/p4misc/main/blob/master/p4prometheus/images/grafana03.png)
+8. ```Prometheus```をクリックします。  
+  ![grafana04.png](https://github.com/p4misc/main/blob/master/p4prometheus/images/grafana04.png)
+9. URLに```http://localhost:9090```、Accessに```Browser```を指定して```Save & Test```をクリックします。  
+  ![grafana05.png](https://github.com/p4misc/main/blob/master/p4prometheus/images/grafana05.png)
+10. ```+```ボタンを押して、```Import```をクリックします。  
+  ![grafana06.png](https://github.com/p4misc/main/blob/master/p4prometheus/images/grafana06.png)
+11. ```Upload .json file```をクリックします。  
+  ![grafana07.png](https://github.com/p4misc/main/blob/master/p4prometheus/images/grafana07.png)
+12. 本リポジトリに登録されている```p4_stats_dashboard.json```を選択します。  
+  ![grafana08.png](https://github.com/p4misc/main/blob/master/p4prometheus/images/grafana08.png)
+13. ```Import```をクリックします。  
+  ![grafana09.png](https://github.com/p4misc/main/blob/master/p4prometheus/images/grafana09.png)
 14. いくつか収集できていないデータがありますが、サンプルのダッシュボードが表示されます。
 
 ## 備考
