@@ -1,0 +1,18 @@
+# 一つ目のエントリ
+dn: dc=p4misc,dc=com
+dc: test
+o: p4misc.com
+objectClass: dcObject
+objectClass: organization
+
+# 2つ目のエントリ
+dn: ou=users,dc=p4misc,dc=com
+ou: users
+objectClass: organizationalUnit
+
+# 3つ目のエントリ
+dn: cn=manager,dc=p4misc,dc=com
+objectClass: organizationalRole
+objectClass: simpleSecurityObject
+cn: manager
+userPassword: {SSHA}WLxWiWqlZb8jWRWm19qV9ptFo3nOUfwj

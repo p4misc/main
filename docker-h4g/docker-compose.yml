@@ -1,0 +1,28 @@
+version: '3'
+
+networks:
+    helix-core-network:
+        external: true
+
+services:
+  p4d:
+    build: ./p4d
+    image: p4d
+    container_name: p4d
+    command: /root/run_p4d.sh
+    networks:
+      - helix-core-network
+    ports:
+      - "1666:1666"
+
+  h4g:
+    build: ./h4g
+    image: h4g
+    container_name: h4g
+    networks:
+      - helix-core-network
+    ports:
+      - "443:443"
+    depends_on:
+      - p4d
+
