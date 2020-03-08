@@ -25,4 +25,21 @@ services:
       - "443:443"
     depends_on:
       - p4d
+      - gitlab
+
+  gitlab:
+    image: 'gitlab/gitlab-ce:latest'
+    restart: always
+    container_name: gitlab
+    networks:
+      - helix-core-network
+    environment:
+      GITLAB_OMNIBUS_CONFIG: |
+        external_url 'http://gitlab:9010'
+        gitlab_rails['gitlab_shell_ssh_port'] = 2022
+        gitlab_rails['lfs_enabled'] = true
+        gitlab_rails['lfs_storage_path'] = "/var/opt/gitlab-lfs"
+    ports:
+      - '9010:9010'
+      - '2022:22'
 
